@@ -27,7 +27,7 @@ CREATE TABLE created_quizes (
   user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
   quiz_name VARCHAR(255) NOT NULL,
   num_of_questions INT NOT NULL,
-  difficulty VARCHAR(255),
+  difficulty INT,
   rating INT,
   num_of_times_hosted INT,
   total_players_played INT
@@ -60,7 +60,7 @@ CREATE TABLE answers (
 CREATE TABLE players (
   id SERIAL PRIMARY KEY NOT NULL,
   game_id INTEGER REFERENCES games(id) ON DELETE CASCADE,
-  player_gamertag VARCHAR(255),
+  gamertag VARCHAR(255),
   score INT,
   is_host BOOLEAN,
   user_id INTEGER REFERENCES users(id) ON DELETE CASCADE
