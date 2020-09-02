@@ -49,19 +49,20 @@ const ranking = (socket, db)=>{
     `, [data.game_id, data.gamer])
     .then((cs)=>{
       let total = data.score + cs.rows[0].score;
-      db.query(`UPDATE players
+      return db.query(`UPDATE players
       SET score = $1 WHERE game_id = $2 AND gamertag = $3
       `, [total, data.game_id, data.gamer])
     })
-    let query = `SELECT players.id, players.gamertag, 
-    players.user_id, players.is_host, players.score, 
-    players.game_id, users.expertise_level 
-    FROM users FULL JOIN players on users.id = players.user_id
-    WHERE game_id = $1`;
-    let gameid = JSON.parse(data.game_id);
-    db.query(query, [gameid])
+    .then(()=>{
+      let query = `SELECT players.id, players.gamertag, 
+      players.user_id, players.is_host, players.score, 
+      players.game_id, users.expertise_level 
+      FROM users FULL JOIN players on users.id = players.user_id
+      WHERE game_id = $1`;
+      let gameid = JSON.parse(data.game_id);
+      return db.query(query, [gameid])
+    })
     .then((data)=>{
-      // console.log(data.rows);
       socket.emit("playersCurrentRanking", data.rows);
     })
   })
