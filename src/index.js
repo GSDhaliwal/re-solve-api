@@ -14,21 +14,42 @@ const server = app.listen(port, () => {
 });
 
 const io = require('socket.io')(server);
-let players = [
-  {id:3, gamertag: "Henry", active_game_id: 3, score: 500, user_id: 1, is_host: true},
-  {id:1, gamertag: "lisa", active_game_id: 3, score: 300, user_id: 2,is_host: false},
-  {id:2, gamertag: "rob", active_game_id: 3, score: 550, user_id: 3, is_host: false}
-];
-io.on('connection', (socket) => {
-  console.log('a user connected', socket.id);
-  socket.on('message', (msg) => {
-    
-    console.log('message: ' + msg);
-    io.emit('message', "server + " + msg);
-  });
+
+
+
+//routes for games list
+const gameslist = require("./gameslist");
+io.on('connection', (socket)=>{
+  gameslist.list(socket, db);
 });
+
+
+//routes for player list in lobby
+const lobbylist = require("./lobbylist");
+io.on('connection', (socket)=>{
+  lobbylist.lobbylist(socket, db);
+});
+
+//routes for hostable game <----
+const hostlobby = require("./hostablegames");
+io.on('connection', (socket)=>{
+  hostlobby.hostlobby(socket, db);
+});
+
+
+
 
 app.get('/', (req, res) => {
   res.send('<h1>Hello 11world</h1>');
 });
 
+
+
+// io.on('connection', (socket) => {
+//   console.log('a user connected', socket.id);
+//   socket.on('message', (msg) => {
+    
+//     console.log('message: ' + msg);
+//     io.emit('message', "server + " + msg);
+//   });
+// });
