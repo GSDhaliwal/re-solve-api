@@ -10,6 +10,19 @@ const login = (socket, db)=>{
     })
     
   })
+
+  socket.on("register", (newUser)=>{
+    console.log(newUser);
+    db.query(`INSERT INTO users (username, password)
+    VALUES ($1, $2) RETURNING *;`,[newUser.username, newUser.password])
+    .then((user)=>{
+      console.log(user.rows[0]);
+      socket.emit("reggedUser", user.rows[0]);
+    }).catch((error)=>{
+      console.log(error);
+      socket.emit("reggedUser", false)
+    })
+  })
 }
 
 
