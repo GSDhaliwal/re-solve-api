@@ -64,3 +64,4 @@ rating, num_of_times_hosted,
 total_players_played)
 VALUES (8, 3, 2, 'Codeville', 3, 5, 5, 0, 0);
 
+ALTER SEQUENCE created_quizzes_id_seq RESTART WITH 9;

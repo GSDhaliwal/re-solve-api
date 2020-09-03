@@ -45,3 +45,5 @@ VALUES (11, 3, false, '5');
 INSERT INTO answers 
 (id, question_id, correct_answer, answer)
 VALUES (12, 3, true, '6');
+
+ALTER SEQUENCE answers_id_seq RESTART WITH 13;

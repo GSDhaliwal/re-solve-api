@@ -7,7 +7,7 @@ const lobbylist = (socket, db)=>{
     let query = 
           `SELECT * FROM games
             WHERE game_code = $1`;
-    let gameCode = JSON.parse(game_code);
+    let gameCode = game_code;
     db.query(query, [gameCode])
     .then((data)=>{
       let gamesData = data.rows[0].id;

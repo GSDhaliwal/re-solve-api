@@ -11,3 +11,4 @@ VALUES(3, 'Hanna', 123, 'noobish');
 INSERT INTO users (id, username, password, expertise_level)
 VALUES(4, 'Felipe', 123, 'LORD');
 
+ALTER SEQUENCE users_id_seq RESTART WITH 5;
