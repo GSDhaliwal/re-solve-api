@@ -1,12 +1,11 @@
 INSERT INTO categories 
 (id, category_name)
-VALUES (1, 'test');
+VALUES (1, 'Code');
+
 INSERT INTO categories 
 (id, category_name)
-VALUES (2, 'Code');
+VALUES (2, 'Math');
+
 INSERT INTO categories 
 (id, category_name)
-VALUES (3, 'Math');
-INSERT INTO categories 
-(id, category_name)
-VALUES (4, 'Geography');
+VALUES (3, 'Geography');
