@@ -8,7 +8,7 @@ const edit = (socket, db)=>{
       socket.emit('editThisQuizTitle', res.rows)
     })
     console.log(quizId)
-    db.query(`SELect * FROM questions WHERE created_quiz_id =$1`, [quizId])
+    db.query(`SELECT * FROM questions WHERE created_quiz_id =$1`, [quizId])
     .then((res)=>{
       let questions = res.rows;
       questions.forEach((question, index)=>{
