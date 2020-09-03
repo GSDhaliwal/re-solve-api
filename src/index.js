@@ -15,10 +15,16 @@ const server = app.listen(port, () => {
 const io = require('socket.io')(server);
 
 const gameroom = require("./gameroom");
+const createQuiz = require("./createQuiz");
+const editQuiz = require("./editQuiz");
+const editedQuiz = require("./editedQuiz");
 
 
 io.on('connection', (socket)=>{
   gameroom.ranking(socket, db);
+  createQuiz.create(socket, db);
+  editedQuiz.edited(socket, db);
+  editQuiz.edit(socket, db);
 });
 
 

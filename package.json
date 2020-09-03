@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node ./src/index.js",
     "error": "TEST_ERROR=true node ./src/index.js",
-    "reset": "psql -U resolve -d resolve_test < ./db/schema.sql && psql -U resolve -d resolve_test < ./db/schema.sql",
+    "reset": "psql -U resolve -d resolve_test < ./db/schema.sql",
     "test:server": "NODE_ENV=test npm start"
   },
   "author": "",
