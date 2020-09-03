@@ -11,14 +11,18 @@ db.connect();
 
 const server = app.listen(port, () => {
   console.log('listening on port 8080');
+
 });
 const io = require('socket.io')(server);
 
 const gameroom = require("./gameroom");
+const login = require("./login");
 
 
 io.on('connection', (socket)=>{
   gameroom.ranking(socket, db);
+  login(socket, db);
+ 
 });
 
 
