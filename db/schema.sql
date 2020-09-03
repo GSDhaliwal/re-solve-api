@@ -39,6 +39,8 @@ CREATE TABLE games (
   host_id INT
 );
 
+
+
 CREATE TABLE players (
   id SERIAL PRIMARY KEY NOT NULL,
   game_id INTEGER REFERENCES games(id) ON DELETE CASCADE,
@@ -47,6 +49,9 @@ CREATE TABLE players (
   is_host BOOLEAN,
   user_id INTEGER REFERENCES users(id) ON DELETE CASCADE
 );
+
+
+
 
 CREATE TABLE questions (
   id SERIAL PRIMARY KEY NOT NULL,
