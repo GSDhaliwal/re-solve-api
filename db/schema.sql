@@ -36,6 +36,7 @@ CREATE TABLE games (
   created_quiz_id INTEGER REFERENCES created_quizzes(id) ON DELETE CASCADE,
   game_code VARCHAR(255),
   competition_mode_enabled BOOLEAN,
+  is_active BOOLEAN,
   host_id INT
 );
 

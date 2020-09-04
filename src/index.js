@@ -20,6 +20,7 @@ const login = require("./login");
 const createQuiz = require("./createQuiz");
 const editQuiz = require("./editQuiz");
 const editedQuiz = require("./editedQuiz");
+const joinRoom = require("./joinRoom");
 //routes for games list
 const gameslist = require("./gameslist");
 //routes for player list in lobby
@@ -34,6 +35,7 @@ io.on('connection', (socket)=>{
   createQuiz.create(socket, db);
   editedQuiz.edited(socket, db);
   editQuiz.edit(socket, db);
+  joinRoom(socket,db);
 
   login(socket, db);
 

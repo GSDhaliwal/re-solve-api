@@ -11,16 +11,7 @@ const list = (socket, db)=>{
       let quizzes = data.rows;
       console.log("testing gameslist:", quizzes);
       socket.emit('gameslist', quizzes);
-      // quizzes.forEach((quiz, index)=>{
-      //   db.query(`SELECT * FROM categories 
-      //   WHERE id = $1`, [quiz.category_id])
-      //   .then((res)=>{
-      //     quiz.categoryList = res.rows;
-      //     if(index === quizzes.length -1){
-      //       socket.emit('gameslist', quizzes);
-      //     }
-      //   })
-      // })
+ 
     })
 
     //new query
