@@ -15,10 +15,11 @@ const server = app.listen(port, () => {
 });
 const io = require('socket.io')(server);
 
-
 const gameroom = require("./gameroom");
 const login = require("./login");
-
+const createQuiz = require("./createQuiz");
+const editQuiz = require("./editQuiz");
+const editedQuiz = require("./editedQuiz");
 //routes for games list
 const gameslist = require("./gameslist");
 //routes for player list in lobby
@@ -30,7 +31,12 @@ io.on('connection', (socket)=>{
   lobbylist.lobbylist(socket, db);
   hostlobby.hostlobby(socket, db);
   gameroom.ranking(socket, db);
+  createQuiz.create(socket, db);
+  editedQuiz.edited(socket, db);
+  editQuiz.edit(socket, db);
+
   login(socket, db);
+
 });
 
 
