@@ -28,6 +28,7 @@ const lobbylist = require("./lobbylist");
 //routes for hostable game <----
 const hostlobby = require("./hostablegames");
 const joinablegames = require("./joinablegames");
+const userCreatedQuizzes = require("./userCreatedQuizzes");
 io.on('connection', (socket)=>{
   gameslist.list(socket, db);
   lobbylist.lobbylist(socket, db);
@@ -39,6 +40,7 @@ io.on('connection', (socket)=>{
   joinRoom(socket,db, io);
   joinablegames(socket,db, io);
   login(socket, db);
+  userCreatedQuizzes(socket, db);
   console.log(' %s sockets connected', io.engine.clientsCount);
 
 });
