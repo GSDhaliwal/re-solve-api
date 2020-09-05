@@ -1,5 +1,5 @@
 const edit = (socket, db)=>{
-  console.log('a user connected', socket.id);
+  console.log('edit: a user connected', socket.id);
   socket.on('quizToEdit', (quiz_id) => {
     let quizId = JSON.parse(quiz_id);
     db.query(`SELECT created_quizzes.quiz_name, created_quizzes.difficulty,categories.category_name FROM created_quizzes FULL JOIN categories on categories.id = created_quizzes.category_id WHERE created_quizzes.id = $1`, [quizId])

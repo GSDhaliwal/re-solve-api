@@ -1,6 +1,6 @@
 const list = (socket, db)=>{
 
-  console.log('a new user connected', socket.id);
+  // console.log('a new user connected', socket.id);
 
   socket.on('hostGames', (user) => {
     console.log("line 4 callback");

@@ -1,6 +1,6 @@
 require('dotenv').config();
 const app = require('express')();
-const port = 8080;
+const port = 5000;
 
 
 const { Pool } = require('pg');
@@ -32,13 +32,14 @@ io.on('connection', (socket)=>{
   gameslist.list(socket, db);
   lobbylist.lobbylist(socket, db);
   hostlobby.hostlobby(socket, db);
-  gameroom.ranking(socket, db);
+  gameroom.ranking(socket, db, io);
   createQuiz.create(socket, db);
   editedQuiz.edited(socket, db);
   editQuiz.edit(socket, db);
   joinRoom(socket,db, io);
   joinablegames(socket,db, io);
   login(socket, db);
+  console.log(' %s sockets connected', io.engine.clientsCount);
 
 });
 

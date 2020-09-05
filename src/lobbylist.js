@@ -1,6 +1,6 @@
 const lobbylist = (socket, db)=>{
 
-  console.log('a new user connected', socket.id);
+  // console.log('a new user connected', socket.id);
 
   socket.on('listplayers', (game_code) => {
     console.log("line 6 callback");
