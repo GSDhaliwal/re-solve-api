@@ -6,7 +6,7 @@ const edited = (socket, db)=>{
     let query = 'SELECT * FROM categories WHERE category_name = $1 ;';
     db.query(query, [testDetails.category])
       .then((res)=> {
-      db.query('INSERT INTO created_quizzes (category_id, quiz_name, num_of_questions, difficulty) VALUES ((SELECT id from categories WHERE category_name = $1), $2, $3, $4);', [testDetails.category, testDetails.gameTitle, testDetails.numOfQuestions, testDetails.difficulty])
+      db.query('INSERT INTO created_quizzes (category_id, quiz_name, num_of_questions, difficulty, user_id) VALUES ((SELECT id from categories WHERE category_name = $1), $2, $3, $4, (SELECT id from users WHERE username = $5));', [testDetails.category, testDetails.gameTitle, testDetails.numOfQuestions, testDetails.difficulty, testDetails.username])
       .then((res) => {
         for (let question of testDetails.questions) {
           if (question.question) {
