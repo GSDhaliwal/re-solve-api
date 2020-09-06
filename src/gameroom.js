@@ -24,26 +24,28 @@ const ranking = (socket, db, io)=>{
         .then((res)=>{
           console.log("wat does it look like?", res.rows);
           let answers = res.rows;
-          let questions = [];
-          let question={};
+          let questions ={};
+          let QA=[];
           for(let answer of answers){
-            if(question.id){
-              question.answers.push(answer.answer);
+            if(questions[answer.question_id]){
+              console.log("same question more answers:", answer.answer);
+              questions[answer.question_id].answers.push({answer:answer.answer, correct_answer: answer.correct_answer});
             } else{
-              question.answers = [answer.answer];
-              question.id = answer.question_id;
-              question.points_per_question = answer.points_per_question;
-              question.time_per_question = answer.time_per_question;
-              question.correct_answer = answer.correct_answer;
-              question.image = answer.image;
-              question.question = answer.question;
-              question.created_quiz_id = answer.created_quiz_id;
-              questions.push(question);
-              question = {};
+              questions[answer.question_id] = {}
+              questions[answer.question_id].answers = [{answer:answer.answer, correct_answer: answer.correct_answer}];
+              questions[answer.question_id].id = answer.question_id;
+              questions[answer.question_id].points_per_question = answer.points_per_question;
+              questions[answer.question_id].time_per_question = answer.time_per_question;
+              questions[answer.question_id].image = answer.image;
+              questions[answer.question_id].question = answer.question;
+              questions[answer.question_id].created_quiz_id = answer.created_quiz_id;
             }
           }
-          console.log(questions);
-          socket.emit('GameroomQ', questions);
+          for(let question in questions){
+            QA.push(questions[question]);
+          }
+          console.log("qa to send back:", QA);
+          socket.emit('GameroomQ', QA);
           // let questions = res.rows;
           // console.log("before questions for loop", questions);
           // console.log("length:", questions.length);
@@ -100,7 +102,7 @@ const ranking = (socket, db, io)=>{
       return db.query(query, [data.currentgame])
     })
     .then((data)=>{
-      socket.emit("playersCurrentRanking", data.rows);
+      io.emit("playersCurrentRanking", data.rows);
     })
   })
 
