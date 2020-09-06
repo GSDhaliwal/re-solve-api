@@ -1,12 +1,17 @@
 const edited = (socket, db)=>{
   console.log('edqu: a user connected', socket.id);
   socket.on('editedQuiz', (testDetails) => {
-    console.log(testDetails)
+    console.log('edited', testDetails)
     db.query('DELETE FROM created_quizzes WHERE id = $1;', [testDetails.oldQuizId]);
     let query = 'SELECT * FROM categories WHERE category_name = $1 ;';
     db.query(query, [testDetails.category])
       .then((res)=> {
-      db.query('INSERT INTO created_quizzes (category_id, quiz_name, num_of_questions, difficulty, user_id) VALUES ((SELECT id from categories WHERE category_name = $1), $2, $3, $4, (SELECT id from users WHERE username = $5));', [testDetails.category, testDetails.gameTitle, testDetails.numOfQuestions, testDetails.difficulty, testDetails.username])
+      db.query(`INSERT INTO created_quizzes 
+      (category_id, quiz_name, num_of_questions, 
+        difficulty, user_id) VALUES ((SELECT id 
+        from categories WHERE category_name = $1), 
+          $2, $3, $4, (SELECT id from users 
+          WHERE username = $5));`, [testDetails.category, testDetails.gameTitle, testDetails.numOfQuestions, testDetails.difficulty, testDetails.username])
       .then((res) => {
         for (let question of testDetails.questions) {
           if (question.question) {
@@ -24,7 +29,7 @@ const edited = (socket, db)=>{
 
         
         
-      })
+    })
 
     
   })
