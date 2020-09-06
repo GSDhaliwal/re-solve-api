@@ -9,7 +9,7 @@ const list = (socket, db)=>{
     db.query(query)
     .then((data)=>{
       let quizzes = data.rows;
-      //console.log("testing gameslist:", quizzes);
+
       socket.emit('gameslist', quizzes);
  
     })
