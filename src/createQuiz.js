@@ -6,6 +6,7 @@ const create = (socket, db)=>{
       .then((res)=> {
       db.query('INSERT INTO created_quizzes (category_id, quiz_name, num_of_questions, difficulty, user_id) VALUES ((SELECT id FROM categories WHERE category_name = $1), $2, $3, $4, (SELECT id from users WHERE username = $5));', [testDetails.category, testDetails.gameTitle, testDetails.numOfQuestions, testDetails.difficulty, testDetails.username])
       .then((res) => {
+        socket.emit("refreshHost", true);
         for (let question of testDetails.questions) {
           if (question.question) {
             db.query('INSERT INTO questions (created_quiz_id, question, image, points_per_question, time_per_question) VALUES ((SELECT id from created_quizzes WHERE quiz_name = $1 AND num_of_questions = $2 AND difficulty = $3), $4, $5, $6, $7);', [testDetails.gameTitle, testDetails.numOfQuestions, testDetails.difficulty, question.question, question.image, question.points_per_question, question.time_per_question])
