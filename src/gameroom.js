@@ -107,6 +107,25 @@ const ranking = (socket, db, io)=>{
   })
 
   socket.on('startgame', (data)=>{
+    db.query(`SELECT num_of_times_hosted FROM created_quizzes 
+    WHERE id = (SELECT created_quiz_id FROM games WHERE id = $1);`,[data])
+    .then((num)=>{
+      let times = num.rows[0].num_of_times_hosted + 1;
+      console.log("hosted times", times);
+      db.query(`UPDATE created_quizzes SET num_of_times_hosted = $1 WHERE id = (SELECT created_quiz_id FROM games WHERE id = $2)`,[times, data])
+    })
+    db.query(`SELECT total_players_played FROM created_quizzes 
+    WHERE id = (SELECT created_quiz_id FROM games WHERE id = $1);`,[data])
+    .then((num)=>{
+      db.query(`SELECT count(*) FROM players WHERE game_id = $1`, [data])
+      .then((numPlayers)=>{
+        console.log("count test", numPlayers.rows);
+        let total = Number(numPlayers.rows[0].count)+num.rows[0].total_players_played;
+        db.query(`UPDATE created_quizzes SET total_players_played = $1 WHERE id = (SELECT created_quiz_id FROM games WHERE id = $2)`,[total, data])
+      })
+    })
+   
+    
     console.log('waitstart:', data);
     io.emit('waitStart', data);
     db.query(`UPDATE games set is_active = false where id = $1`, [data]);
@@ -116,3 +135,6 @@ const ranking = (socket, db, io)=>{
 
 module.exports = {ranking}
 
+
+
+//UPDATE created_quizzes SET num_of_times_hosted = 11 WHERE id = (SELECT created_quiz_id FROM games WHERE id = 99);

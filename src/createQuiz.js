@@ -4,7 +4,7 @@ const create = (socket, db)=>{
     let query = 'SELECT * FROM categories WHERE category_name = $1 ;';
     db.query(query, [testDetails.category])
       .then((res)=> {
-      db.query('INSERT INTO created_quizzes (category_id, quiz_name, num_of_questions, difficulty, user_id) VALUES ((SELECT id FROM categories WHERE category_name = $1), $2, $3, $4, (SELECT id from users WHERE username = $5));', [testDetails.category, testDetails.gameTitle, testDetails.numOfQuestions, testDetails.difficulty, testDetails.username])
+      db.query('INSERT INTO created_quizzes (category_id, quiz_name, num_of_questions, difficulty, user_id, num_of_times_hosted, total_players_played) VALUES ((SELECT id FROM categories WHERE category_name = $1), $2, $3, $4, (SELECT id from users WHERE username = $5), $6, $7);', [testDetails.category, testDetails.gameTitle, testDetails.numOfQuestions, testDetails.difficulty, testDetails.username, 0, 0])
       .then((res) => {
         socket.emit("refreshHost", true);
         for (let question of testDetails.questions) {

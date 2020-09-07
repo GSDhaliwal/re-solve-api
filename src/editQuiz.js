@@ -6,7 +6,7 @@ const edit = (socket, db)=>{
     let quizId = quiz_id;
     db.query(`SELECT created_quizzes.quiz_name, created_quizzes.difficulty,categories.category_name FROM created_quizzes FULL JOIN categories on categories.id = created_quizzes.category_id WHERE created_quizzes.id = $1`, [quizId])
     .then((res) => {
-      console.log(res.rows)
+      console.log("title undefined?", res.rows)
       socket.emit('editThisQuizTitle', res.rows)
     })
     db.query(`select questions.*, answers.* from questions 
