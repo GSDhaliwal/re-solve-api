@@ -1,15 +1,14 @@
 const edit = (socket, db)=>{
   console.log('edit: a user connected', socket.id);
-  socket.on('quizToEdit', (quiz_id) => {
-    let quizId = JSON.parse(quiz_id);
+
+  socket.on('quizToEdit', (quiz_id) => {   
+    console.log('QUIZ ID', quiz_id) 
+    let quizId = quiz_id;
     db.query(`SELECT created_quizzes.quiz_name, created_quizzes.difficulty,categories.category_name FROM created_quizzes FULL JOIN categories on categories.id = created_quizzes.category_id WHERE created_quizzes.id = $1`, [quizId])
     .then((res) => {
       console.log(res.rows)
       socket.emit('editThisQuizTitle', res.rows)
     })
-  })
-  socket.on('quizToEdit', (quiz_id) => {   
-    console.log('QUIZ ID', quiz_id) 
     db.query(`select questions.*, answers.* from questions 
         full join answers on answers.question_id = questions.id 
         where questions.created_quiz_id = $1`, [quiz_id])
