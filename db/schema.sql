@@ -70,8 +70,8 @@ CREATE TABLE answers (
   answer VARCHAR(255)
 );
 
-CREATE TABLE user_played_games (
-  id SERIAL PRIMARY KEY NOT NULL,
-  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
-  game_id INTEGER REFERENCES games(id) ON DELETE CASCADE
-);
+-- CREATE TABLE user_played_games (
+--   id SERIAL PRIMARY KEY NOT NULL,
+--   user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+--   game_id INTEGER REFERENCES games(id) ON DELETE CASCADE
+-- );

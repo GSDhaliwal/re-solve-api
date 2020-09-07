@@ -109,6 +109,7 @@ const ranking = (socket, db, io)=>{
   socket.on('startgame', (data)=>{
     console.log('waitstart:', data);
     io.emit('waitStart', data);
+    db.query(`UPDATE games set is_active = false where id = $1`, [data]);
   })
 }
 
