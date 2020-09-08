@@ -11,15 +11,15 @@ const edited = (socket, db)=>{
         difficulty, user_id, total_players_played, num_of_times_hosted) VALUES ((SELECT id 
         from categories WHERE category_name = $1), 
           $2, $3, $4, (SELECT id from users 
-          WHERE username = $5), $6, $7);`, [testDetails.category, testDetails.gameTitle, testDetails.numOfQuestions, testDetails.difficulty, testDetails.username, 0, 0])
+          WHERE username = $5), $6, $7) RETURNING *;`, [testDetails.category, testDetails.gameTitle, testDetails.numOfQuestions, testDetails.difficulty, testDetails.username, 0, 0])
       .then((res) => {
         for (let question of testDetails.questions) {
           if (question.question) {
-            db.query('INSERT INTO questions (created_quiz_id, question, image, points_per_question, time_per_question) VALUES ((SELECT id from created_quizzes WHERE quiz_name = $1 AND num_of_questions = $2 AND difficulty = $3), $4, $5, $6, $7);', [testDetails.gameTitle, testDetails.numOfQuestions, testDetails.difficulty, question.question, question.image, question.points_per_question, question.time_per_question])
-            .then((res) => {
+            db.query('INSERT INTO questions (created_quiz_id, question, image, points_per_question, time_per_question) VALUES ($1, $2, $3, $4, $5) RETURNING *;', [res.rows[0].id, question.question, question.image, question.points_per_question, question.time_per_question])
+            .then((newq) => {
               for (let answer of question.answers) {
                 if (answer.answer) {
-                  db.query('INSERT INTO answers (question_id, correct_answer, answer) VALUES ((SELECT id from questions WHERE question = $1 AND points_per_question = $2 AND time_per_question = $3), $4, $5);', [question.question, question.points_per_question, question.time_per_question, answer.correct_answer, answer.answer])
+                  db.query('INSERT INTO answers (question_id, correct_answer, answer) VALUES ($1, $2, $3);', [newq.rows[0].id, answer.correct_answer, answer.answer])
                 }
               }
             })

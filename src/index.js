@@ -39,7 +39,7 @@ io.on('connection', (socket)=>{
   lobbylist.lobbylist(socket, db);
   hostlobby.hostlobby(socket, db);
   gameroom.ranking(socket, db, io);
-  createQuiz.create(socket, db);
+  createQuiz.create(socket, db, io);
   editedQuiz.edited(socket, db);
   editQuiz.edit(socket, db);
   cancelgame.cancel(socket, db);

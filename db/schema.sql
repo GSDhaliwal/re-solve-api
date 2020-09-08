@@ -57,7 +57,7 @@ CREATE TABLE players (
 CREATE TABLE questions (
   id SERIAL PRIMARY KEY NOT NULL,
   created_quiz_id INTEGER REFERENCES created_quizzes(id) ON DELETE CASCADE,
-  question VARCHAR(255),
+  question VARCHAR(8000),
   image VARCHAR(255),
   points_per_question INT,
   time_per_question INT
@@ -67,7 +67,7 @@ CREATE TABLE answers (
   id SERIAL PRIMARY KEY NOT NULL,
   question_id INTEGER REFERENCES questions(id) ON DELETE CASCADE,
   correct_answer BOOLEAN,
-  answer VARCHAR(255)
+  answer VARCHAR(8000)
 );
 
 -- CREATE TABLE user_played_games (
