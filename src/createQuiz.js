@@ -1,5 +1,4 @@
 const create = (socket, db, io)=>{
-  console.log('crqu: a user connected', socket.id);
   socket.on('createdQuiz', (testDetails) => {
     let query = 'SELECT * FROM categories WHERE category_name = $1 ;';
     db.query(query, [testDetails.category])

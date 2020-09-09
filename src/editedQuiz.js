@@ -1,7 +1,5 @@
 const edited = (socket, db)=>{
-  console.log('edqu: a user connected', socket.id);
   socket.on('editedQuiz', (testDetails) => {
-    console.log('edited', testDetails)
     db.query('DELETE FROM created_quizzes WHERE id = $1;', [testDetails.oldQuizId]);
     let query = 'SELECT * FROM categories WHERE category_name = $1 ;';
     db.query(query, [testDetails.category])

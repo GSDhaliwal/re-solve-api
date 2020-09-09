@@ -7,7 +7,6 @@ const cancel = (socket, db)=>{
     db.query(query, [game_id])
     .then((res) => {
       let message = 'game deleted';
-      console.log(message);
       socket.emit('confirmMessage' , message);
     })
   })
