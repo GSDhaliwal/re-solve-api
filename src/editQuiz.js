@@ -14,7 +14,6 @@ const edit = (socket, db)=>{
           let QA=[];
           for(let answer of answers){
             if(questions[answer.question_id]){
-              console.log("same question more answers:", answer.answer);
               questions[answer.question_id].answers.push({answer:answer.answer, correct_answer: answer.correct_answer});
             } else{
               questions[answer.question_id] = {}
